@@ -1,0 +1,23 @@
+/*
+Theme Name: mjlah
+Theme URI: https://berwebsite.com
+Author: Adityathok
+Author URI: https://berwebsite.com/about-me
+Description: Simple theme for blog and news portal
+Version: 1.1.0
+Tested up to: 5.4
+Requires at least: 4.9.6
+Requires PHP: 5.2.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: Adityathok
+Tags: one-column, two-columns, three-columns, left-sidebar, right-sidebar, custom-background, custom-logo, custom-menu, featured-images, footer-widgets, full-width-template, theme-options, translation-ready
+
+Resource Licenses:
+theme framework: https://github.com/understrap/understrap
+Font Awesome: http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+Bootstrap: https://getbootstrap.com | https://github.com/twbs/bootstrap/blob/master/LICENSE (Code licensed under MIT, documentation under CC BY 3.0.)
+and of course
+jQuery: https://jquery.org | (Code licensed under MIT)
+WP Bootstrap Navwalker by Edward McIntyre: https://github.com/twittem/wp-bootstrap-navwalker | GNU GPL
+*/
