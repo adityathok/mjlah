@@ -18,12 +18,15 @@ if ( ! function_exists( 'mjlah_scripts' ) ) {
 		$theme_version = $the_theme->get( 'Version' );
 
 		$css_version = $theme_version . '.' . filemtime( get_template_directory() . '/css/theme.css' );
+		wp_enqueue_style( 'slick-theme-styles', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css', array(), $css_version );
+		wp_enqueue_style( 'slick-styles', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css', array(), $css_version );
 		wp_enqueue_style( 'mjlah-styles', get_template_directory_uri() . '/css/theme.css', array(), $css_version );
 		wp_enqueue_style( 'mjlah-custom-styles', get_template_directory_uri() . '/css/custom.css', array(), $css_version );
 
 		wp_enqueue_script( 'jquery' );
 
 		$js_version = $theme_version . '.' . filemtime( get_template_directory() . '/js/theme.min.js' );
+		wp_enqueue_script( 'slick-scripts', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js', array(), $js_version, true );
 		wp_enqueue_script( 'mjlah-scripts', get_template_directory_uri() . '/js/theme.min.js', array(), $js_version, true );
 		wp_enqueue_script( 'mjlah-custom-scripts', get_template_directory_uri() . '/js/custom.js', array(), $js_version, true );
 		if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
