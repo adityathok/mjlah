@@ -368,6 +368,12 @@ Kirki::add_panel('panel_header', [
 					'property'  => 'color',
 				],
 			],
+			'partial_refresh'    => [
+				'partial_link_menu_header_setting' => [
+					'selector'        => '.header-menu',
+					'render_callback' => '__return_false'
+				]
+			],
 		] );
 		Kirki::add_field( 'mjlah_config', [
 			'type'        => 'background',
@@ -458,6 +464,12 @@ Kirki::add_panel('panel_footer', [
 				[
 					'element' => array('.block-footer'),
 				],
+			],
+			'partial_refresh'    => [
+				'partial_background_block_footer' => [
+					'selector'        => '.block-footer',
+					'render_callback' => '__return_false'
+				]
 			],
 		] );		
 		Kirki::add_field( 'mjlah_config', [
@@ -589,6 +601,12 @@ Kirki::add_panel('panel_footer', [
 				'on' 		=> esc_html__( 'On', 'mjlah' ),
 				'off' 		=> esc_html__( 'Off', 'mjlah' ),
 			],
+			'partial_refresh'    => [
+				'partial_scrolltotop_footer' => [
+					'selector'        => '.scrolltoTop',
+					'render_callback' => '__return_false'
+				]
+			],
 		] );
 
 // Add Panel Social Media
@@ -601,7 +619,7 @@ Kirki::add_panel('panel_sosmed', [
 	Kirki::add_section( 'sosmed_link', array(
 		'panel'    => 'panel_sosmed',
 		'title'    => __( 'Link', 'mjlah' ),
-		'priority' => 10,
+		'priority' => 10,	
 	) );
 		Kirki::add_field( 'mjlah_config', [
 			'type'     		=> 'link',
@@ -610,7 +628,13 @@ Kirki::add_panel('panel_sosmed', [
 			'section'  		=> 'sosmed_link',
 			'default'  		=> 'https://facebook.com',
 			'description' 	=> esc_html__( 'Link Facebook, use https://', 'mjlah' ),
-			'priority' 		=> 10,
+			'priority' 		=> 10,		
+			'partial_refresh'    => [
+				'partial_sosmed_link' => [
+					'selector'        => '.social-media-button',
+					'render_callback' => '__return_false'
+				]
+			],
 		] ); 
 		Kirki::add_field( 'mjlah_config', [
 			'type'     		=> 'link',
@@ -714,7 +738,7 @@ Kirki::add_section( 'sidebar_section', array(
 		'label'       => esc_html__( 'Default Position Sidebar', 'mjlah' ),
 		'section'     => 'sidebar_section',
 		'default'     => 'right',
-		'placeholder' => esc_html__( 'Right Sidebar', 'justg' ),
+		'placeholder' => esc_html__( 'Right Sidebar', 'mjlah' ),
 		'priority'    => 10,
 		'multiple'    => 1,
 		'choices'     => [
@@ -723,3 +747,48 @@ Kirki::add_section( 'sidebar_section', array(
 			'right' 	=> esc_html__( 'Right Sidebar', 'mjlah' ),
 		],
 	] );
+	Kirki::add_field('mjlah_config', [
+		'type'        => 'background',
+		'settings'    => 'background_widget_setting',
+		'label'       => esc_html__('Background Widget', 'mjlah'),
+		'description' => esc_html__('Atur background widget', 'mjlah'),
+		'section'     => 'sidebar_section',
+		'default'     => [
+			'background-color'      => 'rgba(255,255,255,0)',
+			'background-image'      => '',
+			'background-repeat'     => 'repeat',
+			'background-position'   => 'center center',
+			'background-size'       => 'cover',
+			'background-attachment' => 'scroll',
+		],
+		'transport'   => 'auto',
+		'output'      => [
+			[
+				'element' => array('.widget-area .block-widget'),
+			],
+		],
+	]);
+	Kirki::add_field('mjlah_config', [
+		'type'        => 'dimensions',
+		'settings'    => 'dimensions_widget_setting',
+		'label'       => esc_html__('Margin Widget', 'mjlah'),
+		'description' => esc_html__('Atur Jarak Widget', 'mjlah'),
+		'section'     => 'sidebar_section',
+		'default'     => [
+			'padding-top'    => '0em',
+			'padding-bottom' => '0em',
+			'padding-left'   => '0em',
+			'padding-right'  => '0em',
+	
+			'margin-top'    => '0em',
+			'margin-bottom' => '2em',
+			'margin-left'   => '0em',
+			'margin-right'  => '0em',
+		],
+		'transport'   => 'auto',
+		'output'      => [
+			[
+				'element' => array('.widget-area .block-widget'),
+			],
+		],
+	]);

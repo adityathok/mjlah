@@ -105,7 +105,7 @@ if ( ! function_exists( 'mjlah_widgets_init' ) ) {
 				'name'          => __( 'Main Sidebar', 'mjlah' ),
 				'id'            => 'main-sidebar',
 				'description'   => __( 'Sidebar widget area', 'mjlah' ),
-				'before_widget' => '<aside id="%1$s" class="block-customizer widget %2$s">',
+				'before_widget' => '<aside id="%1$s" class="block-widget widget %2$s">',
 				'after_widget'  => '</aside>',
 				'before_title'  => '<h3 class="widget-title"><span>',
 				'after_title'   => '</span></h3>',

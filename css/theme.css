@@ -18,6 +18,9 @@
  }
 
  @media (max-width: 768px) {
+      #primary {
+         order: -1;
+      }
      .navbar-collapse {
         position: fixed;
         top: 0px;

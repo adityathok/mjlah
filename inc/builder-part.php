@@ -140,7 +140,7 @@ function mjlah_the_before_content() {
 
 	<?php if ( 'left' === $sidebar_pos && is_active_sidebar( 'main-sidebar' )  ) : ?>
 		<div class="col-md-4 widget-area" id="left-sidebar" role="complementary">
-			<?php dynamic_sidebar( 'main-sidebar' ); ?> 
+			<div class="widget-box"> <?php dynamic_sidebar( 'main-sidebar' ); ?> </div>
 		</div>
 	<?php endif; ?>
 
@@ -161,7 +161,7 @@ function mjlah_the_after_content() {
 
 	<?php if ( 'right' === $sidebar_pos && is_active_sidebar( 'main-sidebar' )  ) : ?>
 		<div class="col-md-4 widget-area" id="right-sidebar" role="complementary">
-			<?php dynamic_sidebar( 'main-sidebar' ); ?> 
+			<div class="widget-box"> <?php dynamic_sidebar( 'main-sidebar' ); ?> </div>
 		</div>
 	<?php endif; ?>	
 
