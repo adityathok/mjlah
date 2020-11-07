@@ -165,6 +165,9 @@ blockquote:before {
 .tags-links a:hover {
    color: var(--white);
 }
+.carousel-post:not(.slick-slider) {
+   display: none;
+}
 .carousel-post .slick-next:before, 
 .carousel-post .slick-prev:before {
    color: var(--dark);
