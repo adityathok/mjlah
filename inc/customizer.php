@@ -748,6 +748,27 @@ Kirki::add_section( 'sidebar_section', array(
 		],
 	] );
 	Kirki::add_field('mjlah_config', [
+		'type'        => 'slider',
+		'settings'    => 'mjlah_sidebar_width',
+		'label'       => esc_html__('Sidebar Width', 'mjlah'),
+		'section'     => 'sidebar_section',
+		'default'     => 33,
+		'transport'   => 'auto',
+		'choices'     => [
+			'min'  => 20,
+			'max'  => 50,
+			'step' => 1,
+		],
+		'output' => [
+			[
+				'element'  => '.widget-side',
+				'property' => 'max-width',
+				'units'    => '%',
+				'media_query' => '@media (min-width: 768px)',
+			],
+		],
+	]);
+	Kirki::add_field('mjlah_config', [
 		'type'        => 'background',
 		'settings'    => 'background_widget_setting',
 		'label'       => esc_html__('Background Widget', 'mjlah'),
