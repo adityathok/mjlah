@@ -165,6 +165,10 @@ blockquote:before {
 .tags-links a:hover {
    color: var(--white);
 }
+.carousel-post .slick-next:before, 
+.carousel-post .slick-prev:before {
+   color: var(--dark);
+}
 
 /*
 * style widget

@@ -59,24 +59,24 @@ class mjlah_carousel_posts_widget extends WP_Widget {
             $i = 1;
             if ( $the_query->have_posts() ) {
             ?>   
-                <div class="list-posts">
-                    <div id="postcarousel-<?php echo $idwidget ;?>" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
+                <div id="postcarousel-<?php echo $idwidget ;?>">
+
+                        <div class="carousel-post mx-3" data-items="<?php echo $items; ?>">
 
                             <?php
                             while ( $the_query->have_posts() ) {
                                 $the_query->the_post(); ?>
-                                    <div class="carousel-item <?php echo $i==1?'active':'';?>">
+                                    <div class="carousel-item-post">
                                         <div class="list-post list-post-<?php echo $i ;?>">       
                                             <?php echo mjlah_generated_schema(get_the_ID()); ?>        
-                                            <div class="d-flex border-bottom pb-2 mb-2">
-                                                <div class="thumb-post">
-                                                    <?php echo mjlah_thumbnail( get_the_ID(),array(70,70), array( 'class' => 'w-100 img-fluid','class-link' => 'd-block mr-3' ) );?>
+                                            <div class="position-relative clearfix">
+                                                <div class="thumb-post float-left pr-2">
+                                                    <?php echo mjlah_thumbnail( get_the_ID(),array(70,70), array( 'class' => 'w-100 img-fluid','class-link' => '' ) );?>
                                                 </div>
                                                 <div class="content-post">
                                                     
                                                     <?php if($viewdate == 'ya'): ?>
-                                                        <small class="d-block text-muted meta-post">
+                                                        <small class="d-block text-muted meta-post mb-1">
                                                             <span class="date-post"><?php echo get_the_date('F j, Y'); ?></span>
                                                         </small>        
                                                     <?php endif; ?>
@@ -92,17 +92,7 @@ class mjlah_carousel_posts_widget extends WP_Widget {
                             } ?>  
 
                         </div>
-                        <a class="carousel-control-prev" href="#postcarousel-<?php echo $idwidget ;?>" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#postcarousel-<?php echo $idwidget ;?>" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
                 </div>
-
             <?php
             } else {
                 // no posts found
@@ -174,7 +164,7 @@ class mjlah_carousel_posts_widget extends WP_Widget {
             </select>
 		</p>
         <p>
-            <label for="<?php echo $this->get_field_id( 'items' ); ?>">Items:</label> 
+            <label for="<?php echo $this->get_field_id( 'items' ); ?>">Items per Slide:</label> 
             <input class="widefat" id="<?php echo $this->get_field_id( 'items' ); ?>" name="<?php echo $this->get_field_name( 'items' ); ?>" type="number" value="<?php echo esc_attr( $items ); ?>" />
         </p>
         <?php 
