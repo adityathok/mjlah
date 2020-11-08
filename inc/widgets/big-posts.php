@@ -27,11 +27,13 @@ class mjlah_bigposts_widget extends WP_Widget {
     // Creating widget front-end
     public function widget( $args, $instance ) {
         $idwidget   = uniqid();
-        $title      = apply_filters( 'widget_title', $instance['title'] );
+        $thetitle   = isset($instance['title'])?$instance['title']:'';
+        $title      = apply_filters( 'widget_title', $thetitle );
+        $layoutset  = (isset($instance['layout']) && !empty($instance['layout']))?$instance['layout']:'';
 
         // before and after widget arguments are defined by themes
         echo $args['before_widget'];
-        echo '<div class="widget-'.$idwidget.' posts-widget-'.$instance['layout'].'">';
+        echo '<div class="widget-'.$idwidget.' posts-widget-'.$layoutset.'">';
 
         if ( ! empty( $title ) ):
 
@@ -46,11 +48,11 @@ class mjlah_bigposts_widget extends WP_Widget {
             //The Query args
             $query_args                         = array();
             $query_args['post_type']            = 'post';
-            $query_args['cat']                  = $instance['kategori'];
-            $query_args['order']                = $instance['order'];
+            $query_args['cat']                  = (isset($instance['kategori']) && !empty($instance['kategori']))?$instance['kategori']:'';
+            $query_args['order']                = (isset($instance['order']) && !empty($instance['order']))?$instance['order']:'';
 
             ///urutkan berdasarkan view
-            if ($instance['orderby']=="view") {                
+            if (isset($instance['orderby']) && $instance['orderby']=="view") {                
                 $query_args['orderby']          = 'meta_value';
                 $query_args['meta_key']         = 'post_views_count';
             }
@@ -64,7 +66,7 @@ class mjlah_bigposts_widget extends WP_Widget {
                 'gallery1'  => 4,
                 'gallery2'  => 5,
             ];
-            $query_args['posts_per_page']   = $layoutpost[$instance['layout']];
+            $query_args['posts_per_page']   = $layoutset?$layoutpost[$layoutset]:'';
 
             // The Query
             $the_query = new WP_Query( $query_args );
@@ -76,7 +78,7 @@ class mjlah_bigposts_widget extends WP_Widget {
                 echo '<div class="list-posts" data-count="'.$the_query->post_count.'">';
                     while ( $the_query->have_posts() ) {
                         $the_query->the_post();
-                            $this->layoutpost($instance['layout'],$instance,$i,$the_query->post_count);
+                            $this->layoutpost($layoutset,$instance,$i,$the_query->post_count);
                         $i++;
                     }
                 echo '</div>';

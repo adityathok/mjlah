@@ -27,10 +27,11 @@ class mjlah_carousel_posts_widget extends WP_Widget {
     // Creating widget front-end
     public function widget( $args, $instance ) {
         $idwidget   = uniqid();
-        $title      = apply_filters( 'widget_title', $instance['title'] );
+        $thetitle   = isset($instance['title'])?$instance['title']:'';
+        $title      = apply_filters( 'widget_title', $thetitle );
 
-        $viewdate   = $instance['viewdate']?$instance['viewdate']:'ya';       
-        $items      = $instance['items']?$instance['items']:2;
+        $viewdate   = (isset($instance['viewdate']) && !empty($instance['viewdate']))?$instance['viewdate']:'ya';       
+        $items      = (isset($instance['items']) && !empty($instance['items']))?$instance['items']:2;
 
         // before and after widget arguments are defined by themes
         echo $args['before_widget'];
@@ -38,7 +39,7 @@ class mjlah_carousel_posts_widget extends WP_Widget {
 
             if ( ! empty( $title ) ):
 
-                if($instance['kategori']) {
+                if(isset($instance['kategori']) && !empty($instance['kategori'])) {
                     $title = '<a href="'.get_category_link($instance['kategori']).'">'.$title.'</a>';
                     $title .= '<a href="'.get_category_link($instance['kategori']).'feed" class="feed-cat float-right h5 mt-2" target="_blank" title="Technology RSS Feed"><i class="fa fa-rss"></i></a>';
                 }             
@@ -49,8 +50,8 @@ class mjlah_carousel_posts_widget extends WP_Widget {
             //The Query args
             $query_args                         = array();
             $query_args['post_type']            = 'post';
-            $query_args['posts_per_page']       = $instance['jumlah'];
-            $query_args['cat']                  = $instance['kategori'];
+            $query_args['posts_per_page']       = (isset($instance['jumlah']) && !empty($instance['jumlah']))?$instance['jumlah']:'';
+            $query_args['cat']                  = (isset($instance['kategori']) && !empty($instance['kategori']))?$instance['kategori']:'';
 
             // The Query
             $the_query = new WP_Query( $query_args );
@@ -69,7 +70,7 @@ class mjlah_carousel_posts_widget extends WP_Widget {
                                     <div class="carousel-item-post">
                                         <div class="list-post list-post-<?php echo $i ;?>">       
                                             <?php echo mjlah_generated_schema(get_the_ID()); ?>        
-                                            <div class="position-relative clearfix">
+                                            <div class="position-relative clearfix px-1">
                                                 <div class="thumb-post float-left pr-2">
                                                     <?php echo mjlah_thumbnail( get_the_ID(),array(70,70), array( 'class' => 'w-100 img-fluid','class-link' => '' ) );?>
                                                 </div>
@@ -81,7 +82,7 @@ class mjlah_carousel_posts_widget extends WP_Widget {
                                                         </small>        
                                                     <?php endif; ?>
 
-                                                    <a href="<?php echo get_the_permalink(); ?>" class="title-post font-weight-bold h4 d-block"><?php echo get_the_title(); ?></a>
+                                                    <a href="<?php echo get_the_permalink(); ?>" class="title-post d-block"><?php echo get_the_title(); ?></a>
 
                                                 </div>
                                             </div>
@@ -103,6 +104,7 @@ class mjlah_carousel_posts_widget extends WP_Widget {
         echo '</div>';
         
         echo $args['after_widget'];
+
     }
 
     // Widget Backend 

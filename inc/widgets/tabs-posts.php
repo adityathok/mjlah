@@ -27,7 +27,8 @@ class tabs_posts_widget extends WP_Widget {
     // Creating widget front-end
     public function widget( $args, $instance ) {
         $idwidget   = uniqid();
-        $title      = apply_filters( 'widget_title', $instance['title'] );
+        $thetitle   = isset($instance['title'])?$instance['title']:'';
+        $title      = apply_filters( 'widget_title', $thetitle );
 
         $viewpopular        = isset( $instance[ 'popular' ])?$instance[ 'popular' ]:'';
         $viewcomments       = isset( $instance[ 'comments' ])?$instance[ 'comments' ]:'';

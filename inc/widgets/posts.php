@@ -27,15 +27,17 @@ class mjlah_posts_widget extends WP_Widget {
     // Creating widget front-end
     public function widget( $args, $instance ) {
         $idwidget   = uniqid();
-        $title      = apply_filters( 'widget_title', $instance['title'] );
+        $thetitle   = isset($instance['title'])?$instance['title']:'';
+        $title      = apply_filters( 'widget_title', $thetitle );        
+        $layoutset  = (isset($instance['layout']) && !empty($instance['layout']))?$instance['layout']:'';
 
         // before and after widget arguments are defined by themes
         echo $args['before_widget'];
-        echo '<div class="widget-'.$idwidget.' posts-widget-'.$instance['layout'].'">';
+        echo '<div class="widget-'.$idwidget.' posts-widget-'.$layoutset.'">';
 
             if ( ! empty( $title ) ):
 
-                if($instance['kategori']) {
+                if(isset($instance['kategori']) && !empty($instance['kategori'])) {
                     $title = '<a href="'.get_category_link($instance['kategori']).'">'.$title.'</a>';
                     $title .= '<a href="'.get_category_link($instance['kategori']).'feed" class="feed-cat float-right h5 mt-2" target="_blank" title="Technology RSS Feed"><i class="fa fa-rss"></i></a>';
                 }             
@@ -46,12 +48,12 @@ class mjlah_posts_widget extends WP_Widget {
             //The Query args
             $query_args                         = array();
             $query_args['post_type']            = 'post';
-            $query_args['posts_per_page']       = $instance['jumlah'];
-            $query_args['cat']                  = $instance['kategori'];
-            $query_args['order']                = $instance['order'];
+            $query_args['posts_per_page']       = (isset($instance['jumlah']) && !empty($instance['jumlah']))?$instance['jumlah']:'';
+            $query_args['cat']                  = (isset($instance['kategori']) && !empty($instance['kategori']))?$instance['kategori']:'';
+            $query_args['order']                = (isset($instance['order']) && !empty($instance['order']))?$instance['order']:'';
 
             ///urutkan berdasarkan view
-            if ($instance['orderby']=="view") {                
+            if (isset($instance['orderby']) &&  $instance['orderby']=="view") {                
                 $query_args['orderby']          = 'meta_value';
                 $query_args['meta_key']         = 'post_views_count';
             }
@@ -62,11 +64,11 @@ class mjlah_posts_widget extends WP_Widget {
             // The Loop
             $i = 1;
             if ( $the_query->have_posts() ) {
-                $class  = ($instance['layout']=='gallery')?'row px-2':'';
+                $class  = ($layoutset=='gallery')?'row px-2':'';
                 echo '<div class="list-posts '.$class.'">';
                     while ( $the_query->have_posts() ) {
                         $the_query->the_post();
-                        $this->layoutpost($instance['layout'],$instance,$i);
+                        $this->layoutpost($layoutset,$instance,$i);
                         $i++;
                     }
                 echo '</div>';
@@ -79,7 +81,7 @@ class mjlah_posts_widget extends WP_Widget {
         echo '</div>';
         
         //Style for widget
-        if($instance['layout']=='layout1'):
+        if($layoutset=='layout1'):
         ?>
         <style>
             .widget-<?php echo $idwidget;?> .thumb-post a {
@@ -99,11 +101,11 @@ class mjlah_posts_widget extends WP_Widget {
     //widget Layout Post
     public function layoutpost( $layout='layout1',$instance,$i=null) {
 
-        $kutipan    = $instance['kutipan']?$instance['kutipan']:'';
-        $lebar_img  = $instance['lebar_img']?$instance['lebar_img']:70;
-        $tinggi_img = $instance['tinggi_img']?$instance['tinggi_img']:70;        
-        $viewers    = $instance['viewers']?$instance['viewers']:'tidak';
-        $viewdate   = $instance['viewdate']?$instance['viewdate']:'ya';
+        $kutipan    = (isset($instance['kutipan']) && !empty($instance['kutipan']))?$instance['kutipan']:'';
+        $lebar_img  = (isset($instance['lebar_img']) && !empty($instance['lebar_img']))?$instance['lebar_img']:70;
+        $tinggi_img = (isset($instance['tinggi_img']) && !empty($instance['tinggi_img']))?$instance['tinggi_img']:70;        
+        $viewers    = (isset($instance['viewers']) && !empty($instance['viewers']))?$instance['viewers']:'tidak';
+        $viewdate   = (isset($instance['viewdate']) && !empty($instance['viewdate']))?$instance['viewdate']:'ya';
 
         $class      = ($layout=='gallery')?'col-6 pr-2 pl-2 pb-3 pt-0':'';
 

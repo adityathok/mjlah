@@ -27,11 +27,13 @@ class mjlah_popular_posts_widget extends WP_Widget {
     // Creating widget front-end
     public function widget( $args, $instance ) {
         $idwidget   = uniqid();
-        $title      = apply_filters( 'widget_title', $instance['title'] );
+        $thetitle   = isset($instance['title'])?$instance['title']:'';
+        $title      = apply_filters( 'widget_title', $thetitle );        
+        $layoutset  = (isset($instance['layout']) && !empty($instance['layout']))?$instance['layout']:'';
 
         // before and after widget arguments are defined by themes
         echo $args['before_widget'];
-        echo '<div class="widget-'.$idwidget.' popular-posts-widget-'.$instance['layout'].'">';
+        echo '<div class="widget-'.$idwidget.' popular-posts-widget-'.$layoutset.'">';
 
             if ( ! empty( $title ) )
             echo $args['before_title'] . $title . $args['after_title'];
@@ -40,9 +42,9 @@ class mjlah_popular_posts_widget extends WP_Widget {
             //The Query args
             $query_args                         = array();
             $query_args['post_type']            = 'post';
-            $query_args['posts_per_page']       = $instance['jumlah'];
-            $query_args['cat']                  = $instance['kategori'];
-            $query_args['order']                = $instance['order'];
+            $query_args['posts_per_page']       = (isset($instance['jumlah']) && !empty($instance['jumlah']))?$instance['jumlah']:'';
+            $query_args['cat']                  = (isset($instance['kategori']) && !empty($instance['kategori']))?$instance['kategori']:'';
+            $query_args['order']                = (isset($instance['order']) && !empty($instance['order']))?$instance['order']:'';
             $query_args['orderby']              = 'meta_value';
             $query_args['meta_key']             = 'post_views_count';
 
@@ -56,7 +58,7 @@ class mjlah_popular_posts_widget extends WP_Widget {
                 echo '<div class="list-posts">';
                     while ( $the_query->have_posts() ) {
                         $the_query->the_post();
-                        $this->layoutpost($instance['layout'],$instance,$i);                        
+                        $this->layoutpost($layoutset,$instance,$i);                        
                         $i++;
                     }
                 echo '</div>';
@@ -86,12 +88,12 @@ class mjlah_popular_posts_widget extends WP_Widget {
 
     //widget Layout Post
     public function layoutpost( $layout='layout1',$instance,$i=null) {
-
-        $kutipan    = $instance['kutipan']?$instance['kutipan']:'';
-        $lebar_img  = $instance['lebar_img']?$instance['lebar_img']:70;
-        $tinggi_img = $instance['tinggi_img']?$instance['tinggi_img']:70;        
-        $viewers    = $instance['viewers']?$instance['viewers']:'ya';       
-        $viewdate   = $instance['viewdate']?$instance['viewdate']:'tidak';
+        
+        $kutipan    = (isset($instance['kutipan']) && !empty($instance['kutipan']))?$instance['kutipan']:'';
+        $lebar_img  = (isset($instance['lebar_img']) && !empty($instance['lebar_img']))?$instance['lebar_img']:70;
+        $tinggi_img = (isset($instance['tinggi_img']) && !empty($instance['tinggi_img']))?$instance['tinggi_img']:70;        
+        $viewers    = (isset($instance['viewers']) && !empty($instance['viewers']))?$instance['viewers']:'ya';
+        $viewdate   = (isset($instance['viewdate']) && !empty($instance['viewdate']))?$instance['viewdate']:'tidak';
 
         $class      = ($layout=='gallery')?'col-md-6 col-12 p-2 pt-0':'';
 

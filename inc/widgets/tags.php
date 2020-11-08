@@ -28,8 +28,9 @@ class mjlah_tags_widget extends WP_Widget {
 
     public function widget( $args, $instance ) {
 
-    $title  = apply_filters( 'widget_title', $instance['title'] );
-    $number = $instance['number'];
+    $thetitle   = isset($instance['title'])?$instance['title']:'';
+    $title      = apply_filters( 'widget_title', $thetitle );
+    $number     = isset($instance['number'])?$instance['number']:'';
 
         // before and after widget arguments are defined by themes
         echo $args['before_widget'];
