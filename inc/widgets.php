@@ -144,3 +144,4 @@ require_once get_template_directory() . '/inc/widgets/popular-posts.php';
 require_once get_template_directory() . '/inc/widgets/tabs-posts.php';
 require_once get_template_directory() . '/inc/widgets/big-posts.php';
 require_once get_template_directory() . '/inc/widgets/carousel-posts.php';
+require_once get_template_directory() . '/inc/widgets/slider-posts.php';
