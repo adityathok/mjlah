@@ -32,7 +32,7 @@ class mjlah_slider_posts_widget extends WP_Widget {
 
         $navigasi   = (isset($instance['navigasi']) && !empty($instance['navigasi']))?$instance['navigasi']:'ya';       
         $dots       = (isset($instance['dots']) && !empty($instance['dots']))?$instance['dots']:'ya';       
-        $dotstyle   = (isset($instance['dotstyle']) && !empty($instance['dotstyle']))?$instance['dotstyle']:'ya';
+        $dotstyle   = (isset($instance['dotstyle']) && !empty($instance['dotstyle']))?$instance['dotstyle']:'style1';
         $lebar_img  = (isset($instance['lebar_img']) && !empty($instance['lebar_img']))?$instance['lebar_img']:630;
         $tinggi_img = (isset($instance['tinggi_img']) && !empty($instance['tinggi_img']))?$instance['tinggi_img']:300;    
 
@@ -102,7 +102,7 @@ class mjlah_slider_posts_widget extends WP_Widget {
                         <?php endif; ?>
 
                         <?php if($dots=='ya'): ?>
-                            <ol class="carousel-indicators">
+                            <ol class="carousel-indicators" data-style="<?php echo $dotstyle ;?>">
                                 <?php
                                 $in = 0;
                                 while ( $the_query->have_posts() ) {
