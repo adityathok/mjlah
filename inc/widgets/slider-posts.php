@@ -193,15 +193,15 @@ class mjlah_slider_posts_widget extends WP_Widget {
         <p>
             <label for="<?php echo $this->get_field_id( 'navigasi' ); ?>">Navigasi :</label>        
             <select class="widefat" name="<?php echo $this->get_field_name( 'navigasi' ); ?>">
-                <option value="tidak"<?php selected($viewdate, "tidak"); ?>>Tidak</option>
-                <option value="ya"<?php selected($viewdate, "ya"); ?>>Ya</option>
+                <option value="tidak"<?php selected($navigasi, "tidak"); ?>>Tidak</option>
+                <option value="ya"<?php selected($navigasi, "ya"); ?>>Ya</option>
             </select>
 		</p>
         <p>
             <label for="<?php echo $this->get_field_id( 'dots' ); ?>">Dots :</label>        
             <select class="widefat" name="<?php echo $this->get_field_name( 'dots' ); ?>">
-                <option value="tidak"<?php selected($viewdate, "tidak"); ?>>Tidak</option>
-                <option value="ya"<?php selected($viewdate, "ya"); ?>>Ya</option>
+                <option value="tidak"<?php selected($dots, "tidak"); ?>>Tidak</option>
+                <option value="ya"<?php selected($dots, "ya"); ?>>Ya</option>
             </select>
 		</p>
         <p>
