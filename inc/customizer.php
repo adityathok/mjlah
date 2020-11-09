@@ -680,6 +680,26 @@ Kirki::add_panel('panel_sosmed', [
 		'priority' => 10,
 	) );
 		Kirki::add_field( 'mjlah_config', [
+			'type'        => 'select',
+			'settings'    => 'whatsapp_footer',
+			'label'       => esc_html__( 'Whatsapp button', 'mjlah' ),
+			'section'     => 'sosmed_whatsapp',
+			'default'     => 'off',
+			'description' => esc_html__( 'Enable the floating Whatsapp button in the footer', 'mjlah' ),
+			'priority'    => 10,
+			'multiple'    => 1,
+			'choices'     => [
+				'on' 		=> esc_html__( 'On', 'mjlah' ),
+				'off' 		=> esc_html__( 'Off', 'mjlah' ),
+			],		
+			'partial_refresh'    => [
+				'partial_whatsapp_footer' => [
+					'selector'        => '.wa-floating',
+					'render_callback' => '__return_false'
+				]
+			],
+		] );
+		Kirki::add_field( 'mjlah_config', [
 			'type'     		=> 'text',
 			'settings' 		=> 'whatsapp_sosmed_number',
 			'label'    		=> __( 'Whatsapp Number', 'mjlah' ),
@@ -697,20 +717,6 @@ Kirki::add_panel('panel_sosmed', [
 			'description' 	=> esc_html__( 'Whatsapp message', 'mjlah' ),
 			'priority' 		=> 10,
 		] ); 
-		Kirki::add_field( 'mjlah_config', [
-			'type'        => 'select',
-			'settings'    => 'whatsapp_footer',
-			'label'       => esc_html__( 'Whatsapp button', 'mjlah' ),
-			'section'     => 'sosmed_whatsapp',
-			'default'     => 'off',
-			'description' => esc_html__( 'Enable the floating Whatsapp button in the footer', 'mjlah' ),
-			'priority'    => 10,
-			'multiple'    => 1,
-			'choices'     => [
-				'on' 		=> esc_html__( 'On', 'mjlah' ),
-				'off' 		=> esc_html__( 'Off', 'mjlah' ),
-			],
-		] );
 		Kirki::add_field( 'mjlah_config', [
 			'type'        => 'select',
 			'settings'    => 'whatsapp_footer_position',
