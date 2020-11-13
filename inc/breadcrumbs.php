@@ -40,102 +40,130 @@ function custom_get_category_parents( $id, $visited = array() ) {
 function mjlah_breadcrumbs() {
     global $post;
     
-    $html = '<ol class="breadcrumb">';
+    $breadcrumbdisable  = get_theme_mod('breadcrumb_disable', array());
+    $showbreadcrumb     = true;
     
-    if ( (is_front_page()) || (is_home()) ) {
-      $html .= '<li class="breadcrumb-item active">Home</li>';
+    if ( is_front_page() && in_array( 'disable-on-home', $breadcrumbdisable)) {
+        $showbreadcrumb = false;
     }
     
-    else {
-      $html .= '<li class="breadcrumb-item"><a href="'.esc_url(home_url('/')).'">Home</a></li>';
+    if ( ! is_front_page() && is_singular( 'page' ) && in_array( 'disable-on-page', $breadcrumbdisable)) {
+        $showbreadcrumb = false;
+    }
+    
+    if ( is_archive() && in_array( 'disable-on-archive', $breadcrumbdisable)) {
+        $showbreadcrumb = false;
+    }
+    
+    if ( is_singular( 'post' ) && in_array( 'disable-on-post', $breadcrumbdisable)) {
+        $showbreadcrumb = false;
+    }
+    
+    if ( is_404() && in_array( 'disable-on-404', $breadcrumbdisable)) {
+        $showbreadcrumb = false;
+    }
+    
+    if ( in_array( 'disable-on-all', $breadcrumbdisable)) {
+        $showbreadcrumb = false;
+    }
+
+    if ( $showbreadcrumb ) {
       
-      if ( is_attachment() ) {
-        $parent = get_post($post->post_parent);
-        $categories = get_the_category($parent->ID);
-        
-        if ( $categories[0] ) {
-          $html .= custom_get_category_parents($categories[0]);
-        }
-        
-        $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $parent ) ) . '">' . $parent->post_title . '</a></li>';
-        $html .= '<li class="breadcrumb-item active">' . get_the_title() . '</li>';
-      }
+      $html = '<ol class="breadcrumb">';
       
-      elseif ( is_category() ) {
-        $category = get_category( get_query_var( 'cat' ) );
+      if ( (is_front_page()) || (is_home()) ) {
+        $html .= '<li class="breadcrumb-item active">Home</li>';
+      } else {
+        $html .= '<li class="breadcrumb-item"><a href="'.esc_url(home_url('/')).'">Home</a></li>';
         
-        if ( $category->parent != 0 ) {
-          $html .= custom_get_category_parents( $category->parent );
-        }
-        
-        $html .= '<li class="breadcrumb-item active">' . single_cat_title( '', false ) . '</li>';
-      }
-      
-      elseif ( is_page() && !is_front_page() ) {
-        $parent_id = $post->post_parent;
-        $parent_pages = array();
-        
-        while ( $parent_id ) {
-          $page = get_page($parent_id);
-          $parent_pages[] = $page;
-          $parent_id = $page->post_parent;
-        }
-        
-        $parent_pages = array_reverse( $parent_pages );
-        
-        if ( !empty( $parent_pages ) ) {
-          foreach ( $parent_pages as $parent ) {
-            $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $parent->ID ) ) . '">' . get_the_title( $parent->ID ) . '</a></li>';
+        if ( is_attachment() ) {
+          $parent = get_post($post->post_parent);
+          $categories = get_the_category($parent->ID);
+          
+          if ( $categories[0] ) {
+            $html .= custom_get_category_parents($categories[0]);
           }
+          
+          $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $parent ) ) . '">' . $parent->post_title . '</a></li>';
+          $html .= '<li class="breadcrumb-item active">' . get_the_title() . '</li>';
         }
         
-        $html .= '<li class="breadcrumb-item active">' . get_the_title() . '</li>';
-      }
-      
-      elseif ( is_singular( 'post' ) ) {
-        $categories = get_the_category();
-        
-        if ( isset($categories[0]) && $categories[0] ) {
-          $html .= custom_get_category_parents($categories[0]);
+        elseif ( is_category() ) {
+          $category = get_category( get_query_var( 'cat' ) );
+          
+          if ( $category->parent != 0 ) {
+            $html .= custom_get_category_parents( $category->parent );
+          }
+          
+          $html .= '<li class="breadcrumb-item active">' . single_cat_title( '', false ) . '</li>';
         }
         
-        $html .= '<li class="breadcrumb-item active">' . get_the_title() . '</li>';
-      }
-      
-      elseif ( is_tag() ) {
-        $html .= '<li class="breadcrumb-item active">' . single_tag_title( '', false ) . '</li>';
-      }
-      
-      elseif ( is_day() ) {
-        $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_year_link( get_the_time( 'Y' ) ) ) . '">' . get_the_time( 'Y' ) . '</a></li>';
-        $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) ) . '">' . get_the_time( 'm' ) . '</a></li>';
-        $html .= '<li class="breadcrumb-item active">' . get_the_time('d') . '</li>';
-      }
-      
-      elseif ( is_month() ) {
-        $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_year_link( get_the_time( 'Y' ) ) ) . '">' . get_the_time( 'Y' ) . '</a></li>';
-        $html .= '<li class="breadcrumb-item active">' . get_the_time( 'F' ) . '</li>';
-      }
-      
-      elseif ( is_year() ) {
-        $html .= '<li class="breadcrumb-item active">' . get_the_time( 'Y' ) . '</li>';
-      }
-      
-      elseif ( is_author() ) {
-        $html .= '<li class="breadcrumb-item active">' . get_the_author() . '</li>';
-      }
-      
-      elseif ( is_search() ) {
-        $html .= '<li class="breadcrumb-item active">Search Results</li>';
-      }
-      
-      elseif ( is_404() ) {
+        elseif ( is_page() && !is_front_page() ) {
+          $parent_id = $post->post_parent;
+          $parent_pages = array();
+          
+          while ( $parent_id ) {
+            $page = get_page($parent_id);
+            $parent_pages[] = $page;
+            $parent_id = $page->post_parent;
+          }
+          
+          $parent_pages = array_reverse( $parent_pages );
+          
+          if ( !empty( $parent_pages ) ) {
+            foreach ( $parent_pages as $parent ) {
+              $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $parent->ID ) ) . '">' . get_the_title( $parent->ID ) . '</a></li>';
+            }
+          }
+          
+          $html .= '<li class="breadcrumb-item active">' . get_the_title() . '</li>';
+        }
+        
+        elseif ( is_singular( 'post' ) ) {
+          $categories = get_the_category();
+          
+          if ( isset($categories[0]) && $categories[0] ) {
+            $html .= custom_get_category_parents($categories[0]);
+          }
+          
+          $html .= '<li class="breadcrumb-item active">' . get_the_title() . '</li>';
+        }
+        
+        elseif ( is_tag() ) {
+          $html .= '<li class="breadcrumb-item active">' . single_tag_title( '', false ) . '</li>';
+        }
+        
+        elseif ( is_day() ) {
+          $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_year_link( get_the_time( 'Y' ) ) ) . '">' . get_the_time( 'Y' ) . '</a></li>';
+          $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) ) . '">' . get_the_time( 'm' ) . '</a></li>';
+          $html .= '<li class="breadcrumb-item active">' . get_the_time('d') . '</li>';
+        }
+        
+        elseif ( is_month() ) {
+          $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_year_link( get_the_time( 'Y' ) ) ) . '">' . get_the_time( 'Y' ) . '</a></li>';
+          $html .= '<li class="breadcrumb-item active">' . get_the_time( 'F' ) . '</li>';
+        }
+        
+        elseif ( is_year() ) {
+          $html .= '<li class="breadcrumb-item active">' . get_the_time( 'Y' ) . '</li>';
+        }
+        
+        elseif ( is_author() ) {
+          $html .= '<li class="breadcrumb-item active">' . get_the_author() . '</li>';
+        }
+        
+        elseif ( is_search() ) {
+          $html .= '<li class="breadcrumb-item active">Search Results</li>';
+        }
+        
+        elseif ( is_404() ) {
+          
+        }
         
       }
       
-    }
-    
-    $html .= '</ol>';
-    
-    echo $html;
+      $html .= '</ol>';
+      
+      echo $html;
   }
+}

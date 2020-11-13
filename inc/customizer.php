@@ -433,6 +433,37 @@ Kirki::add_panel('panel_header', [
 			],
 		] );
 
+// Add Panel breadcrumb
+Kirki::add_panel('panel_breadcrumb', [
+	'priority'    => 10,
+	'title'       => esc_html__('Breadcrumb', 'mjlah'),
+	'description' => esc_html__('', 'mjlah'),
+]);
+    //add field to footer widget
+	Kirki::add_section( 'breadcrumb_visibility', array(
+		'panel'    => 'panel_breadcrumb',
+		'title'    => __( 'Visibility', 'mjlah' ),
+		'priority' => 10,
+	) );
+		Kirki::add_field( 'mjlah_config', [
+			'type'        => 'multicheck',
+			'settings'    => 'breadcrumb_disable',
+			'label'       => esc_html__( 'Visibility Breadcrumb', 'mjlah' ),
+			'section'     => 'breadcrumb_visibility',
+			'default'     => array('disable-on-home', 'disable-on-404'),
+			'description' => esc_html__( 'Hide breadcrumb', 'mjlah' ),
+			'priority'    => 10,
+			'choices'     => [
+        		'disable-on-all'        => esc_html__('Disable on All', 'justg'),
+        		'disable-on-home'       => esc_html__('Disable on Home Page', 'justg'),
+        		'disable-on-page'       => esc_html__('Disable on Page', 'justg'),
+        		'disable-on-post'       => esc_html__('Disable on Post', 'justg'),
+        		'disable-on-archive'    => esc_html__('Disable on Archive', 'justg'),
+        		'disable-on-404'        => esc_html__('Disable on 404', 'justg'),
+			],
+		] ); 
+
+
 // Add Panel footer
 Kirki::add_panel('panel_footer', [
 	'priority'    => 10,
