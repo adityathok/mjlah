@@ -402,3 +402,42 @@ function mjlah_socialmedia() {
 
     printf("<div class='social-media-button'>%s</div>",implode('',$button));
 }
+
+function mjlah_newsticker(){
+    ?>
+    <div class="mjlah-newsticker">
+        <div class="ban-newsticker bg-primary text-white">
+            <div class="ban-title">NEWSTICKER</div>
+            <div class="ban-time"><small><?= date( 'H:i', current_time( 'timestamp', 0 ) ); ?></small></div>
+        </div>
+        <div class="run-newsticker w-100 bg-dark p-2">
+            <?php
+ 
+            // The Query
+            $args = array(
+                'post_type' => 'post',
+                'posts_per_page' => 8,
+            );
+            $the_query = new WP_Query( $args );
+             
+            // The Loop
+            if ( $the_query->have_posts() ) {
+                echo '<div class="ticker d-flex">';
+                echo '<div class="ticker__list">';
+                while ( $the_query->have_posts() ) {
+                    $the_query->the_post();
+                    echo '<div class="ticker__item"><a href="'. get_the_permalink().'" class="text-white"><i class="fa fa-circle mr-2"></i> '.get_the_title().'</a></div>';
+                }
+                echo '</div>';
+                echo '</div>';
+            } else {
+                // no posts found
+            }
+            /* Restore original Post Data */
+            wp_reset_postdata();
+            
+            ?>
+        </div>
+    </div>
+    <?php
+}

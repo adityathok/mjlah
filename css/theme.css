@@ -252,7 +252,22 @@ blockquote:before {
    width: 10px;
    height: 10px;
 }
-
+.run-newsticker .ticker {
+   overflow: hidden;
+}
+.ticker__list {
+   display : flex;
+   animation : ticker 50s infinite linear;
+}
+.run-newsticker .ticker:hover .ticker__list {
+   animation-play-state: paused;
+}  
+.ticker__item {
+ margin-right : 20px;
+}
+.ticker__item a {
+   white-space: pre;
+}
 
 @media (min-width: 768px) {
    .dropdown-sub {
@@ -299,3 +314,7 @@ blockquote:before {
       padding-left: 15px !important;
    }
 }
+
+@keyframes ticker {
+   100% {transform : translateX(-100%);}
+ }
