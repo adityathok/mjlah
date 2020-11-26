@@ -45,7 +45,7 @@ class mjlah_popular_posts_widget extends WP_Widget {
             $query_args['posts_per_page']       = (isset($instance['jumlah']) && !empty($instance['jumlah']))?$instance['jumlah']:'';
             $query_args['cat']                  = (isset($instance['kategori']) && !empty($instance['kategori']))?$instance['kategori']:'';
             $query_args['order']                = (isset($instance['order']) && !empty($instance['order']))?$instance['order']:'';
-            $query_args['orderby']              = 'meta_value';
+            $query_args['orderby']              = 'meta_value_num';
             $query_args['meta_key']             = 'post_views_count';
 
             // The Query
@@ -98,7 +98,7 @@ class mjlah_popular_posts_widget extends WP_Widget {
         $class      = ($layout=='gallery')?'col-md-6 col-12 p-2 pt-0':'';
 
         echo '<div class="list-post list-post-'.$i.' '.$class.'">';        
-        echo mjlah_generated_schema(get_the_ID());
+        // echo mjlah_generated_schema(get_the_ID());
 
             //Layout 1
             if($layout=='layout1'):
